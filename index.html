@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- font awesome icons -->
+  <script
+    src="https://kit.fontawesome.com/b2e6b41519.js"
+    crossorigin="anonymous"
+  ></script>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alarm clock</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container" id="border">
+    <div id="heading">
+      <h2>Alarm clock</h2>
+    </div>
+    
+    <!-- live timer -->
+    <div class="timer-display" id="currentTime"></div>
+    <div class="container2">
+      <!-- set button -->
+      <form id="alarmForm">
+        <!-- timer Inputs of hrs -->
+        <div class="inputs" id="inputs">
+          <input
+            maxlength="2"
+            id="hourInput"
+            type="number"
+            placeholder="hrs"
+            min="0"
+            max="12"
+            required
+          />
+          <!-- timer Inputs of mins -->
+          <input
+            maxlength="2"
+            id="minuteInput"
+            type="number"
+            placeholder="min"
+            min="0"
+            max="59"
+            required
+          />
+          <!-- timer Inputs of seconds -->
+          <input
+            required
+            maxlength="2"
+            id="secondInput"
+            type="number"
+            placeholder="sec"
+            min="0"
+            max="59"
+          />
+        </div>
+        <button type="submit" id="set">Set Alarm</button>
+      </form>
+
+      <div class="alarmList">
+        <ul id="list"></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- script -->
+  <script src="index.js"></script>
+</body>
+</html>
