@@ -45,11 +45,13 @@ function displayTime() {
   minutes = updateZero(minutes);
   seconds = updateZero(seconds);
   timerRef.innerHTML = `<span>${hours}:${minutes}:${seconds} ${zone}</span>`;
-  let time = `${hours}:${minutes}:${seconds}`;
+  let time = `${hours}:${minutes}:${seconds}:${zone}`;
   if (alarmArr.includes(time)) {
     clearInterval(intervalId); // Stop updating the time display
     ringAlarm();
   }
+  // console.log(time);
+  // console.log(alarmArr);
 }
 
 // function for input type="number" maxlength work properly
@@ -63,26 +65,37 @@ document.querySelectorAll(`input[type="number"]`).forEach((input) => {
 function addDom(time) {
   const id = Date.now().toString();
 
-  alList.innerHTML += `<li >
+  alList.innerHTML += `<li>
   <span  id="${id}">${time}</span>
   <span ><i id="${id}" class="fa-solid fa-trash-can delete" ></i></span>
   </li>`;
-  console.log("jhdh", deleteButton);
+  console.log(deleteButton);
 }
 //set alarm
 alarmForm.addEventListener("submit", (e) => {
   // alarmIndex += 1;
   e.preventDefault();
   //alarmObjects
-
   let alarmHour = alarmForm.hourInput.value;
   let alarmMinute = alarmForm.minuteInput.value;
   let alarmSecond = alarmForm.secondInput.value;
   let zoneTime = alarmForm.zone.value;
-  let newAlarm = `${alarmHour}:${alarmMinute}:${alarmSecond} ${zoneTime}`;
-  console.log("alarm", deleteButton);
+  if(alarmHour.length<=1){
+    alarmHour = "0"+alarmHour;
+  }
+  if(alarmMinute.length<=1){
+    alarmMinute = "0"+alarmMinute;
+  }
+  if(alarmSecond.length<=1){
+    alarmSecond = "0"+alarmSecond;
+  }
+  let newAlarm = `${alarmHour}:${alarmMinute}:${alarmSecond}:${zoneTime}`;
+  console.log("alarm", newAlarm);
   alarmArr.push(newAlarm);
   addDom(newAlarm);
+  
+  
+
 });
 
 setInterval(displayTime, 1000);
@@ -112,7 +125,7 @@ function deleteAlarm(value) {
   });
   console.log(newAlarmList);
   alarmArr = newAlarmList;
-  console.log(alarmList);
+  // console.log(alarmList);
   updateAlarmList();
 }
 
@@ -132,8 +145,9 @@ function ringAlarm() {
   audio.play();
   audio.loop = true;
 
-  // Create the "Stop Alarm" button
+  // Create the "Stop Alarm" button with an ID
   const stopAlarmButton = document.createElement("button");
+  stopAlarmButton.id = "stopAlarmButton"; // Add an ID to the button
   stopAlarmButton.textContent = "Stop Alarm";
   stopAlarmButton.addEventListener("click", stopAlarm);
   document.body.appendChild(stopAlarmButton);
@@ -144,11 +158,12 @@ function stopAlarm() {
   audio.currentTime = 0;
   audio.loop = false;
 
-  // Remove the "Stop Alarm" button from the DOM
-  const stopAlarmButton = document.querySelector("button");
+  // Remove the "Stop Alarm" button from the DOM using the correct ID selector
+  const stopAlarmButton = document.querySelector("#stopAlarmButton");
   if (stopAlarmButton) {
     stopAlarmButton.parentNode.removeChild(stopAlarmButton);
   }
+
 
   startClock(); // Restart the clock
 }
